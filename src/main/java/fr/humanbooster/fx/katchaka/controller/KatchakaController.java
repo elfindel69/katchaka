@@ -152,16 +152,12 @@ public class KatchakaController {
     public ModelAndView personnePost(@Valid @ModelAttribute Personne personne, BindingResult result) {
 
         if(result.hasErrors()){
-            ModelAndView mav = new ModelAndView("personne");
-            mav.addObject("personne",personne);
-            mav.addObject("villes",villeService.recupererVilles());
-            mav.addObject("genres",genreService.recupererGenres());
-            mav.addObject("interets",interetService.recupererInterets());
-            mav.addObject("statuts",statutService.recupererStatuts());
+            ModelAndView mav = personneGet(personne.getId());
+            mav.addObject("personne", personne);
             return mav;
         }else{
             System.out.println(personne);
-            personneService.ajouterPersonne(personne);
+            personneService.enregisterPersonne(personne);
             return new ModelAndView("redirect:personnes");
         }
     }
@@ -224,7 +220,7 @@ public class KatchakaController {
             interets.add(poney);
             toto.setInterets(interets);
             toto.setDateDeNaissance(formater.parse("1950-01-01"));
-            personneService.ajouterPersonne(toto);
+            personneService.enregisterPersonne(toto);
             Personne carla = new Personne();
             carla.setPseudo("carla");
             carla.setVille(villeService.recupererVilleParNom("Lyon"));
@@ -233,7 +229,7 @@ public class KatchakaController {
             carla.setGenreRecherche(genreService.recupererGenre("Homme"));
             carla.setInterets(interets);
             carla.setDateDeNaissance(formater.parse("1991-01-01"));
-            personneService.ajouterPersonne(carla);
+            personneService.enregisterPersonne(carla);
 
             Personne evan = new Personne();
             evan.setPseudo("evan");
@@ -246,7 +242,7 @@ public class KatchakaController {
             interetsEvan.add(interetService.recupererInteret("Formule 1"));
             evan.setInterets(interetsEvan);
             evan.setDateDeNaissance(formater.parse("1987-09-26"));
-            personneService.ajouterPersonne(evan);
+            personneService.enregisterPersonne(evan);
 
             Personne tomate = new Personne();
             tomate.setPseudo("tomate");
@@ -258,7 +254,7 @@ public class KatchakaController {
             interetsTomate.add(interetService.recupererInteret("Musculation"));
             tomate.setInterets(interetsTomate);
             tomate.setDateDeNaissance(formater.parse("1991-01-01"));
-            personneService.ajouterPersonne(tomate);
+            personneService.enregisterPersonne(tomate);
 
             Personne jean = new Personne();
             jean.setPseudo("jean");
@@ -270,7 +266,7 @@ public class KatchakaController {
             interetsJean.add(interetService.recupererInteret("Escalade"));
             jean.setInterets(interetsJean);
             jean.setDateDeNaissance(formater.parse("1980-07-01"));
-            personneService.ajouterPersonne(jean);
+            personneService.enregisterPersonne(jean);
 
             for(int i=0;i<100;i++){
                 System.out.println("test");
@@ -290,7 +286,7 @@ public class KatchakaController {
                     personne.setGenre(genreService.recupererGenre("Femme"));
                     personne.setGenreRecherche(genreService.recupererGenre("Homme"));
                 }
-                personneService.ajouterPersonne(personne);
+                personneService.enregisterPersonne(personne);
             }
         }
 

@@ -20,7 +20,7 @@ public class PersonneServiceImpl implements PersonneService {
     }
 
     @Override
-    public Personne ajouterPersonne(Personne personne) {
+    public Personne enregisterPersonne(Personne personne) {
         return personneDao.save(personne);
     }
 

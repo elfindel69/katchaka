@@ -1,15 +1,19 @@
+<%--@elvariable id="filtre" type="java.lang.String"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<jsp:include page="header.jsp"></jsp:include>
+<html>
+<jsp:include page="header.jsp"/>
 <body>
-<jsp:include page="nav.jsp"></jsp:include>
+<jsp:include page="nav.jsp"/>
 <h1 class="text-center">Katchaka Liste des personnes</h1>
 <div class="text-center">
     <form action="personnes" method="get">
-        <input type="text" name="filtre" value="${filtre}">
+        <label class="dark" for="filtre">Filtre</label>
+            <input type="text" name="filtre" id="filtre" value="${filtre}">
+
         <button class="btn btn-primary" type="submit">GO!</button>
     </form>
     <form action="personnes" method="get">
@@ -24,12 +28,13 @@
             <th>
                 pseudo
                 <a href="personnes?sort=pseudo">&#x2B07;</a>
-                <a href="personnes?sort=pseudo,DESC">&#x2B06;</a></th>
+                <a href="personnes?sort=pseudo,DESC">&#x2B06;</a>
             </th>
             <th>
                 genre
                 <a href="personnes?sort=genre.nom">&#x2B07;</a>
-                <a href="personnes?sort=genre.nom,DESC">&#x2B06;</a></th>
+                <a href="personnes?sort=genre.nom,DESC">&#x2B06;</a>
+            </th>
             <th>
                 date de naissance
                 <a href="personnes?sort=dateDeNaissance">&#x2B07;</a>
@@ -54,6 +59,7 @@
         </tr>
     </thead>
     <tbody>
+    <%--@elvariable id="pagePersonnes" type="org.springframework.web.servlet.mvc.condition.ProducesRequestCondition"--%>
     <c:forEach items="${pagePersonnes.content}" var="personne">
         <tr>
             <td>
@@ -113,7 +119,7 @@
     <a class="btn btn-primary mt-1" href="personne">ajouter une personne</a><br>
 </div>
 
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

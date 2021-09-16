@@ -1,10 +1,12 @@
+<%--@elvariable id="statut" type="fr.humanbooster.fx.katchaka.business.Statut"--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<jsp:include page="header.jsp"></jsp:include>
+<html>
+<jsp:include page="header.jsp"/>
 <body>
-<jsp:include page="nav.jsp"></jsp:include>
+<jsp:include page="nav.jsp"/>
 <h1 class="text-center">Katchaka Statut ${statut.nom}</h1>
 <div class="text-center">
     <p>liste des personnes ${statut.nom}</p>
@@ -19,7 +21,7 @@
     </c:forEach>
 </div>
 
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"/>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PersonneService {
 
-    Personne ajouterPersonne(Personne personne);
+    Personne enregisterPersonne(Personne personne);
 
     List<Personne> recupererPersonnes();
 
