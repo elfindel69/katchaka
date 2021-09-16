@@ -12,6 +12,6 @@
     <input type="text" name="VILLE"  placeHolder="Ville"><br>
     <button class="btn btn-primary" type="submit">GO!</button>
 </form>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

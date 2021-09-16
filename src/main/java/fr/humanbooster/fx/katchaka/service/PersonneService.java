@@ -32,4 +32,6 @@ public interface PersonneService {
     List<Personne> recupererPersonnes(Ville ville);
 
     Page<Personne> recupererPersonnesParPseudoFilter(String filter,Pageable pageable);
+
+    Personne recupererPersonneParId(Long id);
 }

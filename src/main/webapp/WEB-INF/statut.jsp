@@ -19,7 +19,7 @@
     </c:forEach>
 </div>
 
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>

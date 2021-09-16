@@ -12,6 +12,6 @@
     <input type="text" name="INTERET"  placeHolder="intérêt"><br>
     <button class="btn btn-primary" type="submit">GO!</button>
 </form>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <h1 class="text-center">Katchaka </h1>
 
 
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>

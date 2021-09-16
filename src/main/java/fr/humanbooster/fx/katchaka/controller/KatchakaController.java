@@ -133,9 +133,15 @@ public class KatchakaController {
     }
 
     @GetMapping("/personne")
-    public ModelAndView personneGet() {
+    public ModelAndView personneGet(@RequestParam(defaultValue = "0", name="id" ,required = false) Long id) {
+        Personne personne;
+        if(id >0){
+            personne = personneService.recupererPersonneParId(id);
+        }else{
+            personne = new Personne();
+        }
         ModelAndView mav = new ModelAndView("personne");
-        mav.addObject("personne",new Personne());
+        mav.addObject("personne",personne);
         mav.addObject("villes",villeService.recupererVilles());
         mav.addObject("genres",genreService.recupererGenres());
         mav.addObject("interets",interetService.recupererInterets());

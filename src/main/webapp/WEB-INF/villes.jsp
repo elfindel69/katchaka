@@ -19,7 +19,7 @@
     </c:forEach>
     <a class="btn btn-primary" href="ville">Ajouter une ville</a><br>
 </div>
-
+<jsp:include page="footer.jsp"></jsp:include>
 
 </body>
 </html>

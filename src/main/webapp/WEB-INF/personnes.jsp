@@ -18,7 +18,7 @@
 
 </div>
 
-<table class="table-primary table-striped text-center mt-5 mx-auto">
+<table class="table-dark table-striped text-center mt-5 mx-auto">
     <thead>
         <tr>
             <th>
@@ -47,6 +47,9 @@
             </th>
             <th>
                 intérêts
+            </th>
+            <th>
+                Actions
             </th>
         </tr>
     </thead>
@@ -77,6 +80,10 @@
                     ${interet.nom}<br>
                 </c:forEach>
             </td>
+            <td>
+                <a class="btn btn-primary" href="personne?id=${personne.id}">Editer</a>
+                <a class="btn btn-danger" href="#">Supprimer</a>
+            </td>
         </tr>
 
     </c:forEach>
@@ -91,7 +98,7 @@
             &#x23EA;
         </a>
     </c:if>
-    Page ${pagePersonnes.number+1}
+    <span class="dark">Page ${pagePersonnes.number+1}</span>
 
     <c:if test="${!pagePersonnes.last}">
         <a href="?page=${pagePersonnes.number+1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
@@ -106,7 +113,7 @@
     <a class="btn btn-primary mt-1" href="personne">ajouter une personne</a><br>
 </div>
 
-
+<jsp:include page="footer.jsp"></jsp:include>
 
 </body>
 </html>

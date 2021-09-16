@@ -77,4 +77,9 @@ public class PersonneServiceImpl implements PersonneService {
         return personneDao.findPersonnesByPseudoContaining(filter,pageable);
     }
 
+    @Override
+    public Personne recupererPersonneParId(Long id) {
+        return personneDao.findById(id).orElse(null);
+    }
+
 }

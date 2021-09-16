@@ -20,6 +20,6 @@
     </c:forEach>
     <a class="btn btn-primary" href="interet">ajouter un intérêt</a><br>
 </div>
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
