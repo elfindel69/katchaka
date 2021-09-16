@@ -88,7 +88,7 @@
     <form:label path="estFumeur">Fumeur</form:label>
     <form:checkbox path="estFumeur" />
     <br>
-    <button type="submit" class="btn btn-primary"> GO!</button>
+    <form:button type="submit" class="btn btn-primary"> GO!</form:button>
 </form:form>
 
 </body>

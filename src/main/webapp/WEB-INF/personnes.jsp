@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
@@ -63,7 +64,7 @@
                 </c:choose>
             </td>
             <td>
-                    ${personne.dateDeNaissance}
+                <fmt:formatDate type = "both" pattern="dd/MM/yyyy HH:mm:ss z" value = "${personne.dateDeNaissance}" />
             </td>
             <td>
                     ${personne.statut.nom}

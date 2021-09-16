@@ -1,7 +1,5 @@
 package fr.humanbooster.fx.katchaka.business;
 
-import org.hibernate.annotations.Fetch;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
