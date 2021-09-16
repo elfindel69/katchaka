@@ -6,17 +6,20 @@
 <body>
 <jsp:include page="nav.jsp"></jsp:include>
 <h1 class="text-center">Katchaka Liste des villes</h1>
-<form action="villes" method="get">
-    <input type="text" name="filtre" value="${filtre}">
-    <button class="btn btn-primary" type="submit">GO!</button>
-</form>
-<form action="villes" method="get">
-    <button class="btn btn-primary" type="submit">all cities!</button>
-</form>
-<c:forEach items="${villes}" var="ville">
-    <p>${ville.nom}</p>
-</c:forEach>
-<a class="btn btn-primary" href="ville">Ajouter une ville</a><br>
+<div class="text-center">
+    <form action="villes" method="get">
+        <input type="text" name="filtre" value="${filtre}">
+        <button class="btn btn-primary" type="submit">GO!</button>
+    </form>
+    <form action="villes" method="get">
+        <button class="btn btn-primary" type="submit">all cities!</button>
+    </form>
+    <c:forEach items="${villes}" var="ville">
+        <p>${ville.nom}</p>
+    </c:forEach>
+    <a class="btn btn-primary" href="ville">Ajouter une ville</a><br>
+</div>
+
 
 </body>
 </html>

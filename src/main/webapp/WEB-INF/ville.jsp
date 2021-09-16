@@ -8,7 +8,7 @@
 
 <h1 class="text-center">Katchaka Ajout de ville</h1>
 
-<form action="ville" method="post">
+<form action="ville" method="post" class="text-center">
     <input type="text" name="VILLE"  placeHolder="Ville"><br>
     <button class="btn btn-primary" type="submit">GO!</button>
 </form>

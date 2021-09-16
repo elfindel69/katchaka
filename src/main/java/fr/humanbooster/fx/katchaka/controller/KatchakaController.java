@@ -1,19 +1,21 @@
 package fr.humanbooster.fx.katchaka.controller;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 
 import fr.humanbooster.fx.katchaka.business.Interet;
 import fr.humanbooster.fx.katchaka.business.Personne;
 import fr.humanbooster.fx.katchaka.business.Statut;
 import fr.humanbooster.fx.katchaka.business.Ville;
 import fr.humanbooster.fx.katchaka.service.*;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -130,6 +132,34 @@ public class KatchakaController {
         return mav;
     }
 
+    @GetMapping("/personne")
+    public ModelAndView personneGet() {
+        ModelAndView mav = new ModelAndView("personne");
+        mav.addObject("personne",new Personne());
+        mav.addObject("villes",villeService.recupererVilles());
+        mav.addObject("genres",genreService.recupererGenres());
+        mav.addObject("interets",interetService.recupererInterets());
+        mav.addObject("statuts",statutService.recupererStatuts());
+        return mav;
+    }
+    @PostMapping("/personne")
+    public ModelAndView personnePost(@Valid @ModelAttribute Personne personne, BindingResult result) {
+
+        if(result.hasErrors()){
+            ModelAndView mav = new ModelAndView("personne");
+            mav.addObject("personne",personne);
+            mav.addObject("villes",villeService.recupererVilles());
+            mav.addObject("genres",genreService.recupererGenres());
+            mav.addObject("interets",interetService.recupererInterets());
+            mav.addObject("statuts",statutService.recupererStatuts());
+            return mav;
+        }else{
+            System.out.println(personne);
+            personneService.ajouterPersonne(personne);
+            return new ModelAndView("redirect:personnes");
+        }
+    }
+
     // Cette méthode sera invoquée dès que Spring a injecté tous les objets
     @PostConstruct
     private void init() throws ParseException {
@@ -241,6 +271,7 @@ public class KatchakaController {
                 Personne personne = new Personne();
                 personne.setPseudo("toto"+(i+1));
                 personne.setEmail("toto"+(i+1)+"@totomail.fr");
+                personne.setDateDeNaissance(formater.parse("1980-01-01"));
                 List<Interet> interetsPersonne = new ArrayList<>();
                 interetsPersonne.add(interetService.recupererInteret("Poney"));
                 personne.setInterets(interetsPersonne);

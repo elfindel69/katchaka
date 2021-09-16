@@ -6,17 +6,19 @@
 <body>
 <jsp:include page="nav.jsp"></jsp:include>
 <h1 class="text-center">Katchaka Statut ${statut.nom}</h1>
-
+<div class="text-center">
     <p>liste des personnes ${statut.nom}</p>
     <c:forEach items="${statut.personnes}" var="personne">
         <p>${personne.pseudo}
-        <c:choose>
-            <c:when test="${personne.genre.nom eq 'Homme'}">&#x2642;</c:when>
-            <c:when test="${personne.genre.nom eq 'Femme'}">&#x2640;</c:when>
-            <c:otherwise>&#x2716;</c:otherwise>
-        </c:choose>
+            <c:choose>
+                <c:when test="${personne.genre.nom eq 'Homme'}">&#x2642;</c:when>
+                <c:when test="${personne.genre.nom eq 'Femme'}">&#x2640;</c:when>
+                <c:otherwise>&#x2716;</c:otherwise>
+            </c:choose>
         </p>
     </c:forEach>
+</div>
+
 
 </body>
 

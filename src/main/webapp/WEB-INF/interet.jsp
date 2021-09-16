@@ -8,7 +8,7 @@
 
 <h1 class="text-center">Katchaka Ajout d'intérêt</h1>
 
-<form action="interet" method="post">
+<form action="interet" method="post" class="text-center">
     <input type="text" name="INTERET"  placeHolder="intérêt"><br>
     <button class="btn btn-primary" type="submit">GO!</button>
 </form>

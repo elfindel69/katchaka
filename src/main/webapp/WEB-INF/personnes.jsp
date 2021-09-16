@@ -6,43 +6,106 @@
 <body>
 <jsp:include page="nav.jsp"></jsp:include>
 <h1 class="text-center">Katchaka Liste des personnes</h1>
-<form action="personnes" method="get">
-    <input type="text" name="filtre" value="${filtre}">
-    <button class="btn btn-primary" type="submit">GO!</button>
-</form>
-<form action="personnes" method="get">
-    <button class="btn btn-primary" type="submit">all people!</button>
-</form>
-<c:forEach items="${pagePersonnes.content}" var="personne">
-    <p>${personne.pseudo}
-    <c:choose>
-        <c:when test="${personne.genre.nom eq 'Homme'}">&#x2642;</c:when>
-        <c:when test="${personne.genre.nom eq 'Femme'}">&#x2640;</c:when>
-        <c:otherwise>&#x2716;</c:otherwise>
-    </c:choose>
-    </p>
-</c:forEach>
-<c:if test="${!pagePersonnes.first}">
-    <a href="?page=0&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
-        &#x23EE;
-    </a>
-    <a href="?page=${pagePersonnes.number-1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
-        &#x23EA;
-    </a>
-</c:if>
-Page ${pagePersonnes.number+1}
+<div class="text-center">
+    <form action="personnes" method="get">
+        <input type="text" name="filtre" value="${filtre}">
+        <button class="btn btn-primary" type="submit">GO!</button>
+    </form>
+    <form action="personnes" method="get">
+        <button class="btn btn-primary" type="submit">all people!</button>
+    </form>
 
-<c:if test="${!pagePersonnes.last}">
-    <a href="?page=${pagePersonnes.number+1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
-        &#x23E9;
-    </a>
-    <a href="?page=${pagePersonnes.totalPages-1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
-        &#x23ED;
-    </a>
+</div>
 
-</c:if>
-<br>
-<a class="btn btn-primary" href="personne">ajouter une personne</a><br>
+<table class="table-primary table-striped text-center mt-5 mx-auto">
+    <thead>
+        <tr>
+            <th>
+                pseudo
+                <a href="personnes?sort=pseudo">&#x2B07;</a>
+                <a href="personnes?sort=pseudo,DESC">&#x2B06;</a></th>
+            </th>
+            <th>
+                genre
+                <a href="personnes?sort=genre.nom">&#x2B07;</a>
+                <a href="personnes?sort=genre.nom,DESC">&#x2B06;</a></th>
+            <th>
+                date de naissance
+                <a href="personnes?sort=dateDeNaissance">&#x2B07;</a>
+                <a href="personnes?sort=dateDeNaissance,DESC">&#x2B06;</a>
+            </th>
+            <th>
+                statut
+                <a href="personnes?sort=statut.nom">&#x2B07;</a>
+                <a href="personnes?sort=statut.nom,DESC">&#x2B06;</a>
+            </th>
+            <th>
+                ville
+                <a href="personnes?sort=ville.nom">&#x2B07;</a>
+                <a href="personnes?sort=ville.nom,DESC">&#x2B06;</a>
+            </th>
+            <th>
+                intérêts
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${pagePersonnes.content}" var="personne">
+        <tr>
+            <td>
+                    ${personne.pseudo}
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${personne.genre.nom eq 'Homme'}">&#x2642;</c:when>
+                    <c:when test="${personne.genre.nom eq 'Femme'}">&#x2640;</c:when>
+                    <c:otherwise>&#x2716;</c:otherwise>
+                </c:choose>
+            </td>
+            <td>
+                    ${personne.dateDeNaissance}
+            </td>
+            <td>
+                    ${personne.statut.nom}
+            </td>
+            <td>
+                    ${personne.ville.nom}
+            </td>
+            <td>
+                <c:forEach items="${personne.interets}" var="interet">
+                    ${interet.nom}<br>
+                </c:forEach>
+            </td>
+        </tr>
+
+    </c:forEach>
+    </tbody>
+</table>
+<div class="text-center">
+    <c:if test="${!pagePersonnes.first}">
+        <a href="?page=0&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
+            &#x23EE;
+        </a>
+        <a href="?page=${pagePersonnes.number-1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
+            &#x23EA;
+        </a>
+    </c:if>
+    Page ${pagePersonnes.number+1}
+
+    <c:if test="${!pagePersonnes.last}">
+        <a href="?page=${pagePersonnes.number+1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
+            &#x23E9;
+        </a>
+        <a href="?page=${pagePersonnes.totalPages-1}&sort=${pagePersonnes.sort.iterator().next().property},${pagePersonnes.sort.iterator().next().direction}">
+            &#x23ED;
+        </a>
+
+    </c:if>
+    <br>
+    <a class="btn btn-primary mt-1" href="personne">ajouter une personne</a><br>
+</div>
+
+
 
 </body>
 </html>

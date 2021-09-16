@@ -2,6 +2,7 @@ package fr.humanbooster.fx.katchaka.business;
 
 import org.hibernate.annotations.Fetch;
 import org.springframework.data.repository.cdi.Eager;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Personne {
     private String email;
 
     @Past(message = "Merci de preciser une date dans le passé")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateDeNaissance;
 
     @Lob

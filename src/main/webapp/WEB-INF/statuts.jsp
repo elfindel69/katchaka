@@ -8,12 +8,14 @@
 
 <h1 class="text-center">Katchaka Liste des statuts</h1>
 
+<div class="text-center">
+    <c:forEach items="${statuts}" var="statut">
+        <p>
+            <a href="statut?id=${statut.id}">${statut.nom} </a>
+        </p>
+    </c:forEach>
+</div>
 
-<c:forEach items="${statuts}" var="statut">
-    <p>
-        <a href="statut?id=${statut.id}">${statut.nom} </a>
-    </p>
-</c:forEach>
 
 
 </body>
