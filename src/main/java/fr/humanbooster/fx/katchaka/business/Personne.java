@@ -44,6 +44,8 @@ public class Personne {
     private int nbCredits;
     private boolean estFumeur;
 
+    private boolean estAdmin;
+
     @NotNull
     @ManyToOne
     private Genre genre;
@@ -77,6 +79,7 @@ public class Personne {
     private List<Invitation> invitationsRecues;
 
     public Personne() {
+        nbCredits = NB_CREDITS_INITIAL;
     }
 
     public Long getId() {
@@ -141,6 +144,30 @@ public class Personne {
 
     public void setEstFumeur(boolean estFumeur) {
         this.estFumeur = estFumeur;
+    }
+
+    public boolean isEstAdmin() {
+        return estAdmin;
+    }
+
+    public void setEstAdmin(boolean estAdmin) {
+        this.estAdmin = estAdmin;
+    }
+
+    public List<Invitation> getInvitationsEnvoyees() {
+        return invitationsEnvoyees;
+    }
+
+    public void setInvitationsEnvoyees(List<Invitation> invitationsEnvoyees) {
+        this.invitationsEnvoyees = invitationsEnvoyees;
+    }
+
+    public List<Invitation> getInvitationsRecues() {
+        return invitationsRecues;
+    }
+
+    public void setInvitationsRecues(List<Invitation> invitationsRecues) {
+        this.invitationsRecues = invitationsRecues;
     }
 
     public Genre getGenre() {

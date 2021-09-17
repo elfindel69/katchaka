@@ -29,6 +29,7 @@ public class Invitation {
     private VieCommune vieCommune;
 
     public Invitation() {
+        dateEnvoi = new Date();
     }
 
     public Long getId() {

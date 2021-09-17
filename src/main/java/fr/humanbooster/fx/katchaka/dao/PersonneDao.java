@@ -42,4 +42,6 @@ public interface PersonneDao extends JpaRepository<Personne, Long> {
     List<Personne> findPersonnesByVille(@Param("ville") Ville ville);
 
     Page<Personne> findPersonnesByPseudoContaining(String filter, Pageable pageable);
+
+    Personne findByEmailAndMotDePasse(String email, String password);
 }

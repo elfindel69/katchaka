@@ -82,4 +82,26 @@ public class PersonneServiceImpl implements PersonneService {
         return personneDao.findById(id).orElse(null);
     }
 
+    @Override
+    public boolean supprimerPersonne(Long id) {
+        Personne personne = recupererPersonneParId(id);
+        if(personne == null){
+            return false;
+        }else {
+            personneDao.deleteById(id);
+            if(recupererPersonneParId(id) == null){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public Personne recupererPersonne(String email, String password) {
+        return personneDao.findByEmailAndMotDePasse(email,password);
+    }
+
+
+
 }

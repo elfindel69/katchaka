@@ -7,7 +7,10 @@
 <html>
 <jsp:include page="header.jsp"/>
 <body>
-<jsp:include page="nav.jsp"/>
+<c:if test="${(sessionScope.personne ne null) and (sessionScope.personne.estAdmin)}">
+    <jsp:include page="nav.jsp"/>
+</c:if>
+
 <h1 class="text-center">Katchaka Liste des personnes</h1>
 <div class="text-center">
     <form action="personnes" method="get">
@@ -87,8 +90,14 @@
                 </c:forEach>
             </td>
             <td>
-                <a class="btn btn-primary" href="personne?id=${personne.id}">Editer</a>
-                <a class="btn btn-danger" href="#">Supprimer</a>
+                    <c:if test="${sessionScope.personne.estAdmin}">
+                        <a class="btn btn-primary" href="personne?id=${personne.id}">Editer</a>
+                        <a class="btn btn-danger" href="deletePersonne?id=${personne.id}">Supprimer</a>
+                    </c:if>
+                <c:if test="${personne.pseudo ne sessionScope.personne.pseudo}">
+                    <a class="btn btn-primary" href="invitation?id=${personne.id}">inviter</a>
+                </c:if>
+
             </td>
         </tr>
 
@@ -118,7 +127,9 @@
     <br>
     <a class="btn btn-primary mt-1" href="personne">ajouter une personne</a><br>
 </div>
-
+<c:if test="${(sessionScope.personne ne null) and (not sessionScope.personne.estAdmin)}">
+    <a href="tableauDeBord">liste des invitations</a>
+</c:if>
 <jsp:include page="footer.jsp"/>
 
 </body>

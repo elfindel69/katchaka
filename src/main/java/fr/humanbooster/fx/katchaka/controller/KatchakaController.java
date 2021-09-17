@@ -1,6 +1,7 @@
 package fr.humanbooster.fx.katchaka.controller;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import fr.humanbooster.fx.katchaka.business.Interet;
@@ -29,25 +30,32 @@ public class KatchakaController {
 
     // Le contrôleur a besoin de services
     // autrement dit il délègue des traitements à un ou plusieurs services
-    private VilleService villeService;
+    private final VilleService villeService;
 
-    private StatutService statutService;
+    private final StatutService statutService;
 
-    private InteretService interetService;
+    private final InteretService interetService;
 
-    private GenreService genreService;
+    private final GenreService genreService;
 
-    private PersonneService personneService;
+    private final PersonneService personneService;
+
+    private final HttpSession httpSession;
+    private InvitationService invitationService;
 
     // Ce constructeur va provoquer l'injection de dépendances
     public KatchakaController(VilleService villeService, StatutService statutService,
-                              InteretService interetService, GenreService genreService, PersonneService personneService) {
+                              InteretService interetService, GenreService genreService,
+                              PersonneService personneService,HttpSession httpSession,
+                              InvitationService invitationService) {
         super();
         this.villeService = villeService;
         this.statutService = statutService;
         this.interetService = interetService;
         this.genreService = genreService;
         this.personneService = personneService;
+        this.invitationService = invitationService;
+        this.httpSession = httpSession;
     }
     @GetMapping("/ville")
     public ModelAndView villeGet() {
@@ -62,7 +70,43 @@ public class KatchakaController {
 
     @GetMapping({"/","index"})
     public ModelAndView accueil(){
+        return new ModelAndView("connexion");
+    }
+
+    @GetMapping("connexion")
+    public ModelAndView connexionGet(){
+        return new ModelAndView("connexion");
+    }
+    @PostMapping("connexion")
+    public ModelAndView connexionPost(@RequestParam("email")String email,@RequestParam("password") String password){
+        Personne personne = personneService.recupererPersonne(email,password);
+        if(personne != null){
+            httpSession.setAttribute("personne",personne);
+            ModelAndView mav = new ModelAndView("redirect:tableauDeBord");
+
+            return mav;
+        }else{
+
+            return new ModelAndView("connexion");
+        }
+    }
+    @GetMapping({"tableauDeBord"})
+    public ModelAndView tableauDeBord(){
+        Personne personne = (Personne) httpSession.getAttribute("personne");
+        ModelAndView mav = new ModelAndView("tableauDeBord");
+        mav.addObject("invitationsEnvoyees",invitationService.recupererInvitationsEnvoyees(personne));
+        mav.addObject("invitationsRecues",invitationService.recupererInvitationsRecues(personne));
+        return mav;
+    }
+    @GetMapping({"administration"})
+    public ModelAndView administration(){
         return new ModelAndView("index");
+    }
+
+    @GetMapping({"deconnexion"})
+    public ModelAndView deconnexion(){
+        httpSession.invalidate();
+        return new ModelAndView("redirect:connexion");
     }
 
     @GetMapping("villes")
@@ -161,7 +205,34 @@ public class KatchakaController {
             return new ModelAndView("redirect:personnes");
         }
     }
+    @GetMapping("/deletePersonne")
+    public ModelAndView deletePersonneGet(@RequestParam(name="id") Long id) {
+       personneService.supprimerPersonne(id);
+        return new ModelAndView("redirect:personnes");
+    }
 
+    @GetMapping("invitation")
+    public ModelAndView invitationGet(@RequestParam(name="id") Long id) {
+        Personne expediteur = (Personne) httpSession.getAttribute("personne");
+        if(expediteur == null){
+            return new ModelAndView("redirect:connexion");
+        }else{
+            invitationService.inviter(expediteur.getId(),id);
+            return new ModelAndView("redirect:tableauDeBord");
+        }
+
+    }
+    @GetMapping("/accepterInvitation")
+    public ModelAndView accepterInvitationGet(@RequestParam(name="id") Long id) {
+        invitationService.accepterInvitation(id);
+        return new ModelAndView("redirect:tableauDeBord");
+    }
+
+    @GetMapping("/declinerInvitation")
+    public ModelAndView declinerInvitationGet(@RequestParam(name="id") Long id) {
+        invitationService.declinerInvitation(id);
+        return new ModelAndView("redirect:tableauDeBord");
+    }
     // Cette méthode sera invoquée dès que Spring a injecté tous les objets
     @PostConstruct
     private void init() throws ParseException {

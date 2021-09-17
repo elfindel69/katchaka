@@ -11,7 +11,7 @@
 <jsp:include page="nav.jsp"/>
 
 <h1 class="text-center">Katchaka Edition de personne</h1>
-<h2>${personne.pseudo}</h2>
+<h2 class="text-center">${personne.pseudo ne null?'Mise à jour de '.concat(personne.pseudo):''}</h2>
 
 <form:form method="POST" action="personne"
            modelAttribute="personne" class="mt-1 mx-auto col-5">
@@ -89,6 +89,7 @@
     <form:hidden path="id"/>
     <form:button type="submit" class="btn btn-primary"> GO!</form:button>
 </form:form>
+
 <jsp:include page="footer.jsp"/>
 </body>
 </html>

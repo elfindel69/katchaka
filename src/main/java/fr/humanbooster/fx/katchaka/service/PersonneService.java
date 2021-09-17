@@ -34,4 +34,10 @@ public interface PersonneService {
     Page<Personne> recupererPersonnesParPseudoFilter(String filter,Pageable pageable);
 
     Personne recupererPersonneParId(Long id);
+
+    boolean supprimerPersonne(Long id);
+
+    Personne recupererPersonne(String email, String password);
+
+
 }
