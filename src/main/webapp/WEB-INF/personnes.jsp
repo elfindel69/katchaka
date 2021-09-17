@@ -125,12 +125,15 @@
 
     </c:if>
     <br>
+    <jsp:include page="footer.jsp"/>
+    <jsp:useBean id="dateFin" class="java.util.Date"/>
+    <c:set var="msFin" value="${dateFin.getTime()}"/>
+    <p class="dark">page générée en ${msFin - msDepart}</p>
     <a class="btn btn-primary mt-1" href="personne">ajouter une personne</a><br>
 </div>
 <c:if test="${(sessionScope.personne ne null) and (not sessionScope.personne.estAdmin)}">
     <a href="tableauDeBord">liste des invitations</a>
 </c:if>
-<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

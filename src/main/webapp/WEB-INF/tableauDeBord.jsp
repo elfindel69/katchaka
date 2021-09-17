@@ -8,7 +8,7 @@
 <body>
 
 <h1 class="text-center">Katchaka</h1>
-<h2 class="text-center">bienvenue ${sessionScope.personne.pseudo} - solde ${sessionScope.personne.nbCredits}</h2>
+<h2 class="text-center">Bienvenue ${sessionScope.personne.pseudo} - solde ${sessionScope.personne.nbCredits}</h2>
 
 <p class="text-center">Invitations recues</p>
 <table class="table-dark table-striped text-center mt-5 mx-auto">
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-    <c:forEach items="${invitationsRecues}" var="invitation">
+    <c:forEach items="${sessionScope.personne.invitationsRecues}" var="invitation">
         <tr>
             <td>
                 ${invitation.expediteur.pseudo}
@@ -35,6 +35,7 @@
             <td>
                 <c:choose>
                     <c:when test="${invitation.dateLecture ne null}">
+                        aa
                         ${invitation.estAccepte?"acceptee le ":"déclinée le "}
                         <fmt:formatDate type = "both" pattern="dd/MM/yyyy HH:mm:ss z" value = "${invitation.dateLecture}" />
                     </c:when>
@@ -59,7 +60,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${invitationsEnvoyees}" var="invitation">
+    <c:forEach items="${sessionScope.personne.invitationsEnvoyees}" var="invitation">
         <tr>
             <td>
                     ${invitation.destinataire.pseudo}

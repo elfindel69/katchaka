@@ -32,6 +32,14 @@ public class Invitation {
         dateEnvoi = new Date();
     }
 
+    public Invitation(Personne expediteur, Personne destinataire){
+        this();
+        this.expediteur = expediteur;
+        this.destinataire = destinataire;
+        this.expediteur.getInvitationsEnvoyees().add(this);
+        this.destinataire.getInvitationsRecues().add(this);
+    }
+
     public Long getId() {
         return id;
     }

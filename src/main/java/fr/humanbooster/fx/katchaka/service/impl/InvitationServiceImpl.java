@@ -32,29 +32,33 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     @Override
-    public boolean accepterInvitation(Long id) {
+    public Invitation accepterInvitation(Long id) {
         return updateInvitation(id,true);
     }
 
     @Override
-    public boolean declinerInvitation(Long id) {
+    public Invitation declinerInvitation(Long id) {
         return updateInvitation(id,false);
     }
 
-    private boolean updateInvitation(Long id,boolean estAcceptee) {
+    private Invitation updateInvitation(Long id,boolean estAcceptee) {
         Invitation invitation = recupererInvitation(id);
         if(invitation == null){
-            return false;
+            return null;
         }else{
             if(estAcceptee){
+                System.out.println("acceptée");
                 invitation.setEstAccepte(true);
             }
+            System.out.println("test3");
             invitation.setDateLecture(new Date());
            invitation =  invitationDao.save(invitation);
            if(invitation == null){
-               return false;
+               System.out.println(false);
+               return null;
            }else {
-               return true;
+               System.out.println(true);
+               return invitation;
            }
         }
     }
@@ -65,10 +69,7 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Override
     public Invitation inviter(Long expediteurId, Long destinataireId) {
-        Invitation invitation = new Invitation();
-
-       invitation.setExpediteur(personneService.recupererPersonneParId(expediteurId));
-      invitation.setDestinataire(personneService.recupererPersonneParId(destinataireId));
+        Invitation invitation = new Invitation(personneService.recupererPersonneParId(expediteurId),personneService.recupererPersonneParId(destinataireId));
         return invitationDao.save(invitation);
     }
 }

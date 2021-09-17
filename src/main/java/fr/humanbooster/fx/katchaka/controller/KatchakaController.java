@@ -4,10 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import fr.humanbooster.fx.katchaka.business.Interet;
-import fr.humanbooster.fx.katchaka.business.Personne;
-import fr.humanbooster.fx.katchaka.business.Statut;
-import fr.humanbooster.fx.katchaka.business.Ville;
+import fr.humanbooster.fx.katchaka.business.*;
 import fr.humanbooster.fx.katchaka.service.*;
 
 import org.springframework.data.domain.Page;
@@ -81,6 +78,7 @@ public class KatchakaController {
     public ModelAndView connexionPost(@RequestParam("email")String email,@RequestParam("password") String password){
         Personne personne = personneService.recupererPersonne(email,password);
         if(personne != null){
+            System.out.println("test");
             httpSession.setAttribute("personne",personne);
             ModelAndView mav = new ModelAndView("redirect:tableauDeBord");
 
@@ -92,10 +90,9 @@ public class KatchakaController {
     }
     @GetMapping({"tableauDeBord"})
     public ModelAndView tableauDeBord(){
-        Personne personne = (Personne) httpSession.getAttribute("personne");
+        System.out.println("test2 ");
         ModelAndView mav = new ModelAndView("tableauDeBord");
-        mav.addObject("invitationsEnvoyees",invitationService.recupererInvitationsEnvoyees(personne));
-        mav.addObject("invitationsRecues",invitationService.recupererInvitationsRecues(personne));
+
         return mav;
     }
     @GetMapping({"administration"})
@@ -138,7 +135,7 @@ public class KatchakaController {
 
         ModelAndView mav = new ModelAndView("personnes");
         mav.addObject("pagePersonnes",personnes);
-
+        mav.addObject("msFin",new Date().getTime());
 
         return mav;
     }
@@ -150,6 +147,7 @@ public class KatchakaController {
 
     @PostMapping("interet")
     public ModelAndView interetPost(@RequestParam("INTERET") String interet) {
+
         interetService.ajouterInteret(interet);
         return new ModelAndView("redirect:interets");
     }
@@ -217,20 +215,39 @@ public class KatchakaController {
         if(expediteur == null){
             return new ModelAndView("redirect:connexion");
         }else{
-            invitationService.inviter(expediteur.getId(),id);
+            expediteur.getInvitationsEnvoyees().add(invitationService.inviter(expediteur.getId(),id));
             return new ModelAndView("redirect:tableauDeBord");
         }
 
     }
     @GetMapping("/accepterInvitation")
     public ModelAndView accepterInvitationGet(@RequestParam(name="id") Long id) {
-        invitationService.accepterInvitation(id);
+        Personne personne = (Personne) httpSession.getAttribute("personne");
+        int cpt=0;
+        for(Invitation invitation : personne.getInvitationsRecues()){
+            if(invitation.getId() == id){
+                personne.getInvitationsRecues().set(cpt, invitationService.accepterInvitation(id));
+                break;
+            }
+            cpt++;
+        }
+
         return new ModelAndView("redirect:tableauDeBord");
     }
 
     @GetMapping("/declinerInvitation")
     public ModelAndView declinerInvitationGet(@RequestParam(name="id") Long id) {
-        invitationService.declinerInvitation(id);
+        Personne personne = (Personne) httpSession.getAttribute("personne");
+        int cpt=0;
+        for(Invitation invitation : personne.getInvitationsRecues()){
+            if(invitation.getId() == id){
+                personne.getInvitationsRecues().set(cpt,  invitationService.declinerInvitation(id));
+                break;
+            }
+            cpt++;
+        }
+
+
         return new ModelAndView("redirect:tableauDeBord");
     }
     // Cette méthode sera invoquée dès que Spring a injecté tous les objets
